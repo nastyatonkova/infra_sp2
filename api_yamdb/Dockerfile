@@ -6,7 +6,6 @@ RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && pip install psycopg2
 RUN pip3 install -r /app/requirements.txt --no-cache-dir
-#COPY api_yamdb/ /app
 COPY . /app
 WORKDIR /app
 CMD ["gunicorn", "api_yamdb.wsgi:application", "-b", "0:8000" ]
