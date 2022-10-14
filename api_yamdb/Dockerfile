@@ -1,11 +1,9 @@
 FROM python:3.7-slim
-RUN mkdir /app
-RUN pip install --upgrade pip
-COPY requirements.txt /app
+WORKDIR /app
+COPY . .
+RUN pip3 install --upgrade pip
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
-    && pip install psycopg2
-RUN pip3 install -r /app/requirements.txt --no-cache-dir
-COPY . /app
-WORKDIR /app
-CMD ["gunicorn", "api_yamdb.wsgi:application", "-b", "0:8000" ]
+    && pip3 install psycopg2
+RUN pip3 install -r requirements.txt --no-cache-dir
+CMD ["gunicorn", "api_yamdb.wsgi:application", "--bind", "0:8000"]
